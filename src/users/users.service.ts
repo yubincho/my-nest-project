@@ -68,7 +68,7 @@ export class UsersService {
 
 
   async findByIdWithoutPassword(userId: string): Promise<User | null> {
-
+    console.log('[userId]', userId)
     // const user = await this.usersRepository.findOne({where: {id : userId}})
     // console.log('[user]###222', user)
     // if (user) return user;
@@ -76,7 +76,7 @@ export class UsersService {
     // return user
     const queryBuilder =  this.usersRepository
         .createQueryBuilder('user')
-        .select('*')
+        .select(['user.id', 'user.email', 'user.name', 'user.nickname'])
         .where('user.id = :userId', { userId })
         .getOne()
 
