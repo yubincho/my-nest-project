@@ -12,7 +12,7 @@ import {UsersModule} from "../users/users.module";
     PassportModule.register({ defaultStrategy: 'jwt', session: false }),
     JwtModule.register({
       secret: 'secret',
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '1h' },
     }),
 
       UsersModule,

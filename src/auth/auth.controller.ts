@@ -5,6 +5,8 @@ import {ApiOperation, ApiTags} from "@nestjs/swagger";
 import {SuccessInterceptor} from "../common/interceptors/success.interceptor";
 import {JwtAuthGuard} from "./jwt/jwt.guard";
 import {Request} from "express";
+import {CurrentUser} from "../common/decorators/user.decorator";
+import {UserResponseDto} from "../users/dto/user.response.dto";
 
 @ApiTags('Authentication')
 @Controller('auth')
@@ -23,7 +25,8 @@ export class AuthController {
   @ApiOperation({ summary: '현재 유저 가져오기'})
   @UseGuards(JwtAuthGuard)
   @Get()
-  async getUserInfo(@Req() req: Request) {
-    return req.user
+  async getUserInfo(@CurrentUser() user) {
+    const responseUser = new UserResponseDto(user)
+    return responseUser
   }
 }

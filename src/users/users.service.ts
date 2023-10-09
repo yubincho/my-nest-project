@@ -74,9 +74,9 @@ export class UsersService {
     // if (user) return user;
     // throw new HttpException('No User', HttpStatus.NOT_FOUND);
     // return user
-    const queryBuilder =  this.usersRepository
+    const queryBuilder = this.usersRepository
         .createQueryBuilder('user')
-        .select(['user.id', 'user.email', 'user.name', 'user.nickname'])
+        // .select(['user.id', 'user.email', 'user.name', 'user.nickname'])
         .where('user.id = :userId', { userId })
         .getOne()
 
