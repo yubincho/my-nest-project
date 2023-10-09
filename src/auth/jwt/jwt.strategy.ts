@@ -17,13 +17,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         });
     }
 
-    // async validate(payload: Payload) {
-    //    const user =  await this.usersService.findByEmail(payload.sub)
-    //
-    //     if (user) {
-    //         return user; // request.user
-    //     } else {
-    //         throw new UnauthorizedException('접근 오류');
-    //     }
-    // }
+    async validate(payload: Payload) {
+       const user =  await this.usersService.findByIdWithoutPassword(payload.sub)
+
+        if (user) {
+            return user; // request.user
+        } else {
+            throw new UnauthorizedException('접근 오류');
+        }
+    }
 }
