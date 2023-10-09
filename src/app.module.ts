@@ -8,6 +8,7 @@ import process from "process";
 import {ConfigModule} from "@nestjs/config";
 import { UsersModule } from './users/users.module';
 import {Cat} from "./cats/entities/cat.entity";
+import { AuthModule } from './auth/auth.module';
 
 @Module({
 
@@ -28,7 +29,8 @@ import {Cat} from "./cats/entities/cat.entity";
     logging: process.env.NODE_ENV !== 'production',
     }),
     CatsModule,
-    UsersModule
+    UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

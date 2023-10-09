@@ -41,4 +41,12 @@ export class CatsService {
         return new CatResponseDto({ id, email, name })
 
     }
+
+
+    async findByEmail(email: string): Promise<Cat | null> {
+
+        const cat = await this.catRepository.findOneBy({ email })
+        return cat
+    }
+
 }
