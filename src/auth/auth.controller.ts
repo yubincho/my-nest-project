@@ -14,6 +14,7 @@ export class AuthController {
   @ApiOperation({ summary: '로그인' })
   @Post('login')
   async login(@Body() data: LoginRequestDto) {
+    console.log('[data]', data)
     return this.authService.jwtLogin(data)
   }
 }

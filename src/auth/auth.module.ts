@@ -4,8 +4,7 @@ import { AuthController } from './auth.controller';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import {JwtStrategy} from "./jwt/jwt.strategy";
-import {CatsService} from "../cats/cats.service";
-import {CatsModule} from "../cats/cats.module";
+import {UsersModule} from "../users/users.module";
 
 
 @Module({
@@ -16,7 +15,7 @@ import {CatsModule} from "../cats/cats.module";
       signOptions: { expiresIn: '60s' },
     }),
 
-      CatsModule,
+      UsersModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy, ],

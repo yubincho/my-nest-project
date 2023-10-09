@@ -39,34 +39,34 @@ export class CatsController {
     return 'current cat';
   }
 
-  @ApiResponse({
-    status: 200,
-    description: '성공',
-    type: CatResponseDto
-  })
-  @ApiResponse({
-    status: 500,
-    description: '서버에러',
-  })
-  @ApiOperation({ summary: '회원가입'})
-  @Post()
-  async signUp(@Body() body: CatRequestDto) {
-    console.log(body);
+  // @ApiResponse({
+  //   status: 200,
+  //   description: '성공',
+  //   type: CatResponseDto
+  // })
+  // @ApiResponse({
+  //   status: 500,
+  //   description: '서버에러',
+  // })
+  // @ApiOperation({ summary: '회원가입'})
+  // @Post()
+  // async signUp(@Body() body: CatRequestDto) {
+  //   console.log(body);
+  //
+  //   return await this.catsService.signup(body)
+  // }
 
-    return await this.catsService.signup(body)
-  }
-
-  @ApiOperation({ summary: '로그인'})
-  @Post('login')
-  logIn() {
-    return 'login';
-  }
-
-  @ApiOperation({ summary: '로그아웃'})
-  @Post('logout')
-  logOut() {
-    return 'logout';
-  }
+  // @ApiOperation({ summary: '로그인'})
+  // @Post('login')
+  // logIn() {
+  //   return 'login';
+  // }
+  //
+  // @ApiOperation({ summary: '로그아웃'})
+  // @Post('logout')
+  // logOut() {
+  //   return 'logout';
+  // }
 
   @ApiOperation({ summary: '고양이 이미지 업로드'})
   @Post('upload/cats')

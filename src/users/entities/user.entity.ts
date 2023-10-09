@@ -8,13 +8,6 @@ import {ApiProperty} from "@nestjs/swagger";
 export class User extends BaseEntity{
 
     @ApiProperty({
-        example: 1,
-        description: '사용자 아이디'
-    })
-    @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
-    id: number;
-
-    @ApiProperty({
         example: '캣츠@gmail.com',
         description: '이메일',
     })
@@ -23,6 +16,13 @@ export class User extends BaseEntity{
     @Column('varchar', { name: 'email', unique: true, length: 30 })
     email: string;
 
+    @ApiProperty({
+        example: '김철수',
+        description: '이름',
+    })
+    @IsString()
+    @Column()
+    name: string;
 
     @ApiProperty({
         example: '쿠로미',
@@ -30,8 +30,8 @@ export class User extends BaseEntity{
     })
     @IsString()
     @IsNotEmpty()
-    @Column('varchar', { name: 'nickname', length: 30 })
-    nickname: string;
+    @Column({ default: 'default_nickname' })
+    nickname?: string;
 
 
     @ApiProperty({
@@ -44,7 +44,8 @@ export class User extends BaseEntity{
     password: string;
 
 
-
+    @Column({ nullable: true })
+    public profileImg?: string;
 
 
 

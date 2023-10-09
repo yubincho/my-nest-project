@@ -1,5 +1,5 @@
 import {PickType} from "@nestjs/swagger";
-import {Cat} from "../../cats/entities/cat.entity";
+import {User} from "../../users/entities/user.entity";
 
 
-export class LoginRequestDto extends PickType(Cat, ['email', 'password'] as const){}
+export class LoginRequestDto extends PickType(User, ['email', 'password'] as const){}
