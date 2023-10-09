@@ -6,7 +6,7 @@ import { UpdateCatDto } from './dto/update-cat.dto';
 import {CatRequestDto} from "./dto/cat.request.dto";
 import {Cat} from "./entities/cat.entity";
 import * as bcrypt from 'bcryptjs'
-import {CatResponseDto} from "./dto/cat.response.dto";
+
 
 
 @Injectable()

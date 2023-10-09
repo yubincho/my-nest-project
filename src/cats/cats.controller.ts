@@ -17,7 +17,7 @@ import {HttpExceptionFilter} from "../common/filters/http-exception.filter";
 import {CatRequestDto} from "./dto/cat.request.dto";
 import {SuccessInterceptor} from "../common/interceptors/success.interceptor";
 import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
-import {CatResponseDto} from "./dto/cat.response.dto";
+
 
 
 @ApiTags('CAT')

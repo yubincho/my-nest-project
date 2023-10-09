@@ -2,10 +2,11 @@ import {Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UseG
 import { UsersService } from './users.service';
 import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {SuccessInterceptor} from "../common/interceptors/success.interceptor";
-import {CatResponseDto} from "../cats/dto/cat.response.dto";
+
 import {UserRequestDto} from "./dto/user.request.dto";
 import {JwtAuthGuard} from "../auth/jwt/jwt.guard";
 import { Request } from 'express'
+import {UserResponseDto} from "./dto/user.response.dto";
 
 
 @ApiTags('USER')
@@ -17,7 +18,7 @@ export class UsersController {
   @ApiResponse({
     status: 200,
     description: '성공',
-    type: CatResponseDto
+    type: UserResponseDto
   })
   @ApiResponse({
     status: 500,

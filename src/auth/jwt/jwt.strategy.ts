@@ -3,6 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import {Injectable, UnauthorizedException} from '@nestjs/common';
 import {Payload} from "./jwt.payload";
 import {UsersService} from "../../users/users.service";
+import process from "process";
 
 
 @Injectable()
@@ -13,7 +14,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             ignoreExpiration: false, // 무시하지 않기 때문에 false로 한다.
-            secretOrKey: 'secret',
+            secretOrKey: process.env.JWT_SECRET,
         });
     }
 
