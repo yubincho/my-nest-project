@@ -1,13 +1,19 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { join } from 'path';
 import {HttpExceptionFilter} from "./common/filters/http-exception.filter";
 import {ValidationPipe} from "@nestjs/common";
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import expressBasicAuth from 'express-basic-auth';
+import {NestExpressApplication} from "@nestjs/platform-express";
+
 
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  // const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(
+        AppModule,
+  );
   app.useGlobalPipes(new ValidationPipe())
   app.useGlobalFilters(new HttpExceptionFilter());
   app.use(
@@ -19,6 +25,11 @@ async function bootstrap() {
         },
       }),
   );
+
+  app.useStaticAssets(join(__dirname, '..', 'public'));
+  app.setBaseViewsDir(join(__dirname, '..', 'views'));
+  app.setViewEngine('ejs');
+
 
   const config = new DocumentBuilder()
       .setTitle('Cats example')

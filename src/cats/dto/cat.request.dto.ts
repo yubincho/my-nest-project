@@ -4,22 +4,9 @@ import {PickType} from "@nestjs/mapped-types";
 import {ApiProperty} from "@nestjs/swagger";
 
 export class CatRequestDto {
-    @ApiProperty({
-        example: '캣츠@gmail.com',
-        description: '이메일',
-    })
-    @IsEmail()
-    @IsNotEmpty()
-    email: string;
 
-    @ApiProperty({
-        example: '123!@#*',
-        description: '비밀번호',
-    })
-    @IsString()
-    @IsString()
-    @IsNotEmpty()
-    password: string;
+
+
 
     @ApiProperty({
         example: '김철수',
@@ -27,7 +14,7 @@ export class CatRequestDto {
     })
     @IsString()
     @IsNotEmpty()
-    name: string;
+    catName: string;
 
     @ApiProperty({
         example: 'https://www.abcdefg',
@@ -35,4 +22,7 @@ export class CatRequestDto {
     })
     @IsString()
     imgUrl?: string;
+
+
+
 }

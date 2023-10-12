@@ -1,4 +1,5 @@
-import {MiddlewareConsumer, Module, NestModule} from '@nestjs/common';
+// @ts-ignore
+import {MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CatsModule } from './cats/cats.module';
@@ -9,9 +10,11 @@ import {ConfigModule} from "@nestjs/config";
 import { UsersModule } from './users/users.module';
 import {Cat} from "./cats/entities/cat.entity";
 import { AuthModule } from './auth/auth.module';
+import { NestExpressApplication } from '@nestjs/platform-express'
+
+
 
 @Module({
-
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
@@ -31,6 +34,7 @@ import { AuthModule } from './auth/auth.module';
     CatsModule,
     UsersModule,
     AuthModule,
+
   ],
   controllers: [AppController],
   providers: [AppService],

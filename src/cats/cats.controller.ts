@@ -8,15 +8,13 @@ import {
   Delete,
   HttpException,
   UseFilters,
-  ParseIntPipe, UseInterceptors
+  ParseIntPipe, UseInterceptors, Res, Render
 } from '@nestjs/common';
+import { Response } from 'express';
 import { CatsService } from './cats.service';
-import { CreateCatDto } from './dto/create-cat.dto';
-import { UpdateCatDto } from './dto/update-cat.dto';
-import {HttpExceptionFilter} from "../common/filters/http-exception.filter";
-import {CatRequestDto} from "./dto/cat.request.dto";
 import {SuccessInterceptor} from "../common/interceptors/success.interceptor";
 import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
+import {FileInterceptor} from "@nestjs/platform-express";
 
 
 
@@ -34,34 +32,14 @@ export class CatsController {
   //   return this.catsService.findAll();
   // }
 
+  @ApiOperation({ summary: 'html 붙이기 연습'})
   @Get()
+  @Render('cats/index')
   getCurrentCat() {
-    return 'current cat';
+    const data = { title: 'Title', subtitle: 'Subtitle' };
+    return data
   }
 
-  // @ApiResponse({
-  //   status: 200,
-  //   description: '성공',
-  //   type: CatResponseDto
-  // })
-  // @ApiResponse({
-  //   status: 500,
-  //   description: '서버에러',
-  // })
-  // @ApiOperation({ summary: '회원가입'})
-  // @Post()
-  // async signUp(@Body() body: CatRequestDto) {
-  //   console.log(body);
-  //
-  //   return await this.catsService.signup(body)
-  // }
-
-  // @ApiOperation({ summary: '로그인'})
-  // @Post('login')
-  // logIn() {
-  //   return 'login';
-  // }
-  //
   // @ApiOperation({ summary: '로그아웃'})
   // @Post('logout')
   // logOut() {
@@ -69,7 +47,8 @@ export class CatsController {
   // }
 
   @ApiOperation({ summary: '고양이 이미지 업로드'})
-  @Post('upload/cats')
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file'))
   uploadCatImg() {
     return 'uploadImg';
   }
