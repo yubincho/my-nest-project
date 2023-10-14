@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>파일 업로드</title>
+</head>
+<body>
+<form action="/cats/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="file">
+    <input type="submit" value="업로드">
+</form>
+
+<!-- 이미지를 표시할 영역 -->
+<!--<img id="uploadedImage" src="" alt="Uploaded Image">-->
+
+<script>
+
+    // form 태그 선택
+    const form = document.querySelector('form');
+
+    // 이미지를 표시할 <img> 태그 생성
+    const imgElement = document.createElement('img');
+    imgElement.setAttribute('id', 'uploadedImage');
+    imgElement.setAttribute('alt', 'Uploaded Image');
+
+    // form 태그 바로 아래에 이미지 엘리먼트 추가
+    form.insertAdjacentElement('afterend', imgElement);
+
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+
+        try {
+            const response = await fetch('/cats/upload', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                const imageUrl = data.imageUrl; // 서버에서 이미지 URL을 받아오기.
+                imgElement.setAttribute('src', imageUrl); // 이미지 엘리먼트의 src 속성을 업데이트하여 이미지 표시
+            } else {
+                console.error('이미지 업로드 실패');
+            }
+        } catch (error) {
+            console.error('오류 발생:', error);
+        }
+    });
+
+</script>
+
+</body>
+</html>
