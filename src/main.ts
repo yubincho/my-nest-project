@@ -6,6 +6,7 @@ import {ValidationPipe} from "@nestjs/common";
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import expressBasicAuth from 'express-basic-auth';
 import {NestExpressApplication} from "@nestjs/platform-express";
+import * as path from "path";
 
 
 
@@ -26,7 +27,9 @@ async function bootstrap() {
       }),
   );
 
-  app.useStaticAssets(join(__dirname, '..', 'public'));
+  app.useStaticAssets(path.join(__dirname, './common', 'uploads'), {
+    prefix: '/media',
+  });
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
   app.setViewEngine('ejs');
 

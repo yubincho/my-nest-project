@@ -11,20 +11,13 @@
 </form>
 
 <!-- 이미지를 표시할 영역 -->
-<!--<img id="uploadedImage" src="" alt="Uploaded Image">-->
+
+    <img src="" alt="Uploaded Image">
+
 
 <script>
-
-    // form 태그 선택
     const form = document.querySelector('form');
-
-    // 이미지를 표시할 <img> 태그 생성
-    const imgElement = document.createElement('img');
-    imgElement.setAttribute('id', 'uploadedImage');
-    imgElement.setAttribute('alt', 'Uploaded Image');
-
-    // form 태그 바로 아래에 이미지 엘리먼트 추가
-    form.insertAdjacentElement('afterend', imgElement);
+    const imgElement = document.getElementById('uploadedImage');
 
     form.addEventListener('submit', async function(event) {
         event.preventDefault();
@@ -39,8 +32,19 @@
 
             if (response.ok) {
                 const data = await response.json();
-                const imageUrl = data.imageUrl; // 서버에서 이미지 URL을 받아오기.
-                imgElement.setAttribute('src', imageUrl); // 이미지 엘리먼트의 src 속성을 업데이트하여 이미지 표시
+                console.log('[data]', data);
+
+                if (data && data.images && data.images.length > 0) {
+                    // 여러 이미지를 표시할 때 배열을 순회하며 각 이미지를 표시
+                    for (let imageUrl of data.images) {
+                        const img = document.createElement('img');
+                        img.src = imageUrl;
+                        img.alt = 'Uploaded Image';
+                        document.body.appendChild(img); // 이미지를 현재 페이지에 추가
+                    }
+                } else {
+                    console.error('이미지 업로드 실패');
+                }
             } else {
                 console.error('이미지 업로드 실패');
             }
@@ -48,7 +52,6 @@
             console.error('오류 발생:', error);
         }
     });
-
 </script>
 
 </body>

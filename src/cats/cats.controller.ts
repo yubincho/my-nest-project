@@ -8,13 +8,16 @@ import {
   Delete,
   HttpException,
   UseFilters,
-  ParseIntPipe, UseInterceptors, Res, Render, Req, UploadedFile, Injectable,
+  ParseIntPipe, UseInterceptors, Res, Render, Req, UploadedFile, Injectable, UploadedFiles,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { CatsService } from './cats.service';
 import {SuccessInterceptor} from "../common/interceptors/success.interceptor";
 import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
-import {FileInterceptor} from "@nestjs/platform-express";
+import {FileInterceptor, FilesInterceptor} from "@nestjs/platform-express";
+import {multerOptions} from "../common/utils/multer.optios";
+import {Cat} from "./entities/cat.entity";
+import {CurrentUser} from "../common/decorators/user.decorator";
 
 
 
@@ -58,24 +61,31 @@ export class CatsController {
 
   @ApiOperation({ summary: '고양이 이미지 업로드 처리'})
   @Post('upload')
-  @UseInterceptors(FileInterceptor('file'))
-  uploadCatImg(@UploadedFile() file, @Res() res: Response) {
+  @UseInterceptors(FilesInterceptor('file', 10, multerOptions('cats')))
+  uploadCatImg(@UploadedFiles() files: Array<Express.Multer.File>) {
 
-    console.log(file.name); // 업로드된 파일의 이름
-    console.log(file.size); // 업로드된 파일의 크기
+    console.log('files', files)
 
-    console.log(file)
+    // const imageUrl = { imageUrl: `http://localhost:3000/media/cats/${files[0].originalname}` }
+    if (files && files.length > 0) {
+      console.log(files);
 
-    // 이미지 업로드 후 이미지 URL 반환
-    const imageUrl = `/public/upload/`+ file.originalname
-    console.log(imageUrl)
 
-    // 응답 헤더 설정
-    res.setHeader('Content-Type', 'image/jpeg');
 
-    res.status(200).json({ imageUrl });
+      // const imageUrl = `http://localhost:3000/media/cats/${files[0].filename}`;
+      const imageUrl = files.map(file => `http://localhost:3000/media/cats/${file.filename}`);
+      console.log('[imageUrls]', imageUrl)
+      console.log('[imageUrl]', imageUrl)
+      return { images: imageUrl }
+    } else {
+      'No files uploaded.'
+    }
+      // return imageUrl
+
+      // return this.catsService.uploadImg(cat, file);
 
   }
+
 
 
 
